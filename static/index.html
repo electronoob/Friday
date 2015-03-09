@@ -1,96 +1,107 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-<link href='http://fonts.googleapis.com/css?family=Merienda' rel='stylesheet' type='text/css'>
-<style>
-body {
- background-color: #fff;
-font-family: 'Merienda', cursive;
- font-size: 20px;
-}
-h1.botb {
- position: relative;
- left: 0px;
- float: left;
- font-size: 48px;
- text-shadow: 4px 4px 4px #aaa;
- margin-left: auto;
- margin-right: auto;
-}
-p.botb-my {
- font-size:40px;
- color: #000000;
- background-color: #ff0000;
- color: #fff;
-text-align: center;
-clear:both;
--webkit-border-radius: 20px;
--moz-border-radius: 20px;
-border-radius: 20px;
-padding: 20px;
-}
-
-div.Friday-Anim {
-  width: 600px;
-  position: relative;
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
+  <link href='http://fonts.googleapis.com/css?family=Merienda' rel='stylesheet' type='text/css'>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: 'Merienda', cursive;
+      font-size: 20px;
+    }
+    
+    h1.botb {
+      position: relative;
+      left: 0px;
+      float: left;
+      font-size: 48px;
+      text-shadow: 4px 4px 4px #aaa;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    p.botb-my {
+      font-size: 40px;
+      color: #000000;
+      background-color: #ff0000;
+      color: #fff;
+      text-align: center;
+      clear: both;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      border-radius: 20px;
+      padding: 20px;
+    }
+    
+    div.Friday-Anim {
+      width: 600px;
+      position: relative;
+      overflow: hidden;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
 </head>
-<body>
-<div class="Friday-Anim">
-<div id="fa"><p id="botb-my" class="botb-my">Hello, my name is Friday</p></div>
-<p class="botb-my">I like to remember things.</p>
-</div>
-<center><a href="/static/documentation/"><h1>documentation</h1></a></center>
-<center><a href="http://piratepad.net/codeFridaycode"><h1>colab piratepad here</h1></a></center>
-<center><a href="https://www.mindmup.com/#m:h1electronoob/Friday:master:/Friday GUI for developers.mup"><h1>mind map</h1></a>
-<p>in mindmup when prompted let it access your github and select the .mup file in the Friday repo for changes.</p>
-<img src="mindmup.png" width="80%"/>
-</center>
-    <script>
-        document.getElementById('botb-my').innerHTML = "Hello, my name is";
 
-        var e = [], message = 'Friday', animstep = 0.00;
-        /* text generator */
-	str = message;
-        strlen = message.length;
-        while (str.substr(0, 1) != '') {
-            Friday = document.createElement('h1');
-            Friday.id = 'div_' + str.length;
-            Friday.className = 'botb';
-            Friday.textContent=str.substr(0, 1);
-            str = str.substr(1, str.length);
-            document.getElementById('fa').appendChild(Friday);
-        }
-        /* sine */
-        setInterval(redraw, 90);
-        function redraw() {
-    	    str = message;
-            strlen = message.length;
-            anim_y = (Math.cos(animstep) *3);
-            totalWidth = 0;
-             while (str.substr(0, 1) != '') {
-		totalWidth += document.getElementById('div_'+str.length).clientWidth;
-                str = str.substr (1, str.length);
-             }
-            averageLetterWidth = totalWidth / strlen; 
-    	    str = message;
-            letterSpace = averageLetterWidth + anim_y;
-             while (str.substr(0, 1) != '') {
-                id = 'div_' + str.length;
-	        Friday = document.getElementById(id);
-		current_y = Friday.style.top;
-                Friday.style.top = 
-                (Math.sin(animstep) * 4) -20;
-                Friday.style.left = letterSpace * (strlen - str.length) - (anim_y);
-                animstep += 0.08;
-                if(animstep>13) animstep = 0;
-                str = str.substr	(1, str.length);
-             }
-            
-        }
-    </script>
+<body>
+  <div class="Friday-Anim">
+    <div id="fa">
+      <p id="botb-my" class="botb-my">Hello, my name is Friday</p>
+    </div>
+    <p class="botb-my">I like to remember things.</p>
+  </div>
+  <center><a href="/static/documentation/"><h1>documentation</h1></a></center>
+  <center><a href="http://piratepad.net/codeFridaycode"><h1>colab piratepad here</h1></a></center>
+  <center><a href="https://www.mindmup.com/#m:h1electronoob/Friday:master:/Friday GUI for developers.mup"><h1>mind map</h1></a>
+    <p>in mindmup when prompted let it access your github and select the .mup file in the Friday repo for changes.</p>
+    <img src="mindmup.png" width="80%" />
+  </center>
+  <script>
+    document.getElementById('botb-my').innerHTML = "Hello, my name is";
+
+    var e = [],
+      message = 'Friday',
+      animstep = 0.00;
+    /* text generator */
+    str = message;
+    strlen = message.length;
+    while (str.substr(0, 1) != '') {
+      Friday = document.createElement('h1');
+      Friday.id = 'div_' + str.length;
+      Friday.className = 'botb';
+      Friday.textContent = str.substr(0, 1);
+      str = str.substr(1, str.length);
+      document.getElementById('fa').appendChild(Friday);
+    }
+    /* sine */
+    setInterval(redraw, 90);
+
+    function redraw() {
+      str = message;
+      strlen = message.length;
+      anim_y = (Math.cos(animstep) * 3);
+      totalWidth = 0;
+      while (str.substr(0, 1) != '') {
+        totalWidth += document.getElementById('div_' + str.length).clientWidth;
+        str = str.substr(1, str.length);
+      }
+      averageLetterWidth = totalWidth / strlen;
+      str = message;
+      letterSpace = averageLetterWidth + anim_y;
+      while (str.substr(0, 1) != '') {
+        id = 'div_' + str.length;
+        Friday = document.getElementById(id);
+        current_y = Friday.style.top;
+        Friday.style.top =
+          (Math.sin(animstep) * 4) - 20;
+        Friday.style.left = letterSpace * (strlen - str.length) - (anim_y);
+        animstep += 0.08;
+        if (animstep > 13) animstep = 0;
+        str = str.substr(1, str.length);
+      }
+
+    }
+  </script>
 </body>
+
 </html>
