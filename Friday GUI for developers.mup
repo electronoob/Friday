@@ -1,0 +1,88 @@
+{
+  "title": "Friday GUI for developers",
+  "id": 1,
+  "formatVersion": 2,
+  "ideas": {
+    "1": {
+      "title": "login",
+      "id": 2,
+      "ideas": {
+        "1": {
+          "title": "sign up",
+          "id": 4,
+          "ideas": {
+            "1": {
+              "title": "use github acc for login",
+              "id": 10,
+              "attr": {
+                "position": [
+                  139,
+                  6,
+                  1
+                ],
+                "style": {}
+              }
+            }
+          },
+          "attr": {
+            "position": [
+              26,
+              -112,
+              2
+            ],
+            "style": {}
+          }
+        },
+        "2": {
+          "title": "developer home",
+          "id": 8,
+          "attr": {
+            "position": [
+              75,
+              117,
+              1
+            ],
+            "style": {}
+          },
+          "ideas": {
+            "1": {
+              "title": "settings",
+              "id": 13
+            },
+            "2": {
+              "title": "landing page",
+              "id": 14,
+              "ideas": {
+                "1": {
+                  "title": "list all database instances",
+                  "id": 15
+                },
+                "2": {
+                  "title": "show basic profile info of developer",
+                  "id": 16
+                },
+                "3": {
+                  "title": "usage statistics",
+                  "id": 17
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "links": [
+    {
+      "ideaIdFrom": 10,
+      "ideaIdTo": 2,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "solid",
+          "arrow": true
+        }
+      }
+    }
+  ]
+}
