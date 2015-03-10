@@ -53,7 +53,7 @@ func handle_api_set(w http.ResponseWriter, r *http.Request) {
 	}
 	inum := strconv.Itoa(i)
 	c.Set(inum, json, cache.DefaultExpiration)
-	rvalue := ("value #" + inum + " with value '" + m.Key + "': '" + m.Value + "'; at time " + strconv.FormatInt(m.Time, 10))
+	rvalue := ("value #" + inum + "<br>with value '" + m.Key + "'->'" + m.Value + "'<br>at time " + strconv.FormatInt(m.Time, 10))
 	fmt.Fprintln(w, rvalue)
 	i++
 }
