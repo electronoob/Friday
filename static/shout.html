@@ -7,9 +7,10 @@
 
 <body>
   <form action="#" id="shoutbox">
-    <input type="text" name="msg" placeholder="generic">
-    <input type="submit" value="Search">
-  </form>
+    <input type="text" name="key" placeholder="key"><br>
+    <input type="text" name="value" placeholder="value"><br>
+    <input type="submit" value="Send">
+  </form><br>
   <div id="result"></div>
   <script>
     // Attach a submit handler to the form
@@ -19,13 +20,14 @@
 
       // Get some values from elements on the page:
       var $form = $(this),
-        term = $form.find("input[name='msg']").val(),
+        key = $form.find("input[name='key']").val(),
+        value = $form.find("input[name='value']").val(),
         url = '/api/set/shoutbox/'
 
       // Send the data using post
       var posting = $.post(url, {
-        Key: 'message',
-        Value: term
+        Key: key,
+        Value: value
       });
 
       // Put the results in a div
