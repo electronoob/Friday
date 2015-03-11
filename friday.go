@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	http.Handle("/", http.FileServer(http.Dir("/var/www/friday/")))
+	http.Handle("/", http.FileServer(http.Dir("/var/www/gofridayadmin/")))
 	http.HandleFunc("/api/", api.HandleApiSlash)
 	http.HandleFunc("/api/get/", api.HandleApiGet)
 	http.HandleFunc("/api/set/", api.HandleApiSet)

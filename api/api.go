@@ -24,8 +24,10 @@ func HandleApiGet(w http.ResponseWriter, r *http.Request) {
 	gresult, found := c.Get(result)
 	if !found {
 		fmt.Fprintln(w, "Not found!")
+		fmt.Println("INVALUD GET for " + result)
 	} else {
 		fmt.Fprintf(w, "%s", gresult)
+		fmt.Println("GET for " + result)
 	}
 }
 func HandleApiSet(w http.ResponseWriter, r *http.Request) {
@@ -41,5 +43,6 @@ func HandleApiSet(w http.ResponseWriter, r *http.Request) {
 	c.Set(inum, json, cache.DefaultExpiration)
 	rvalue := ("entry " + inum + " with key-value pair <br>'" + m.Key + "'->'" + m.Value + "'<br>at time " + strconv.FormatInt(m.Time, 10))
 	fmt.Fprintln(w, rvalue)
+	fmt.Println("SET #" + inum + "; " + m.Key + "'->'" + m.Value + "'; " + strconv.FormatInt(m.Time, 10))
 	i++
 }
