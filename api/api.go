@@ -17,6 +17,7 @@ func HandleApiSlash(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	fmt.Fprintf(w, "%s", b)
+	fmt.Println("INVALID GET for /api/")
 }
 func HandleApiGet(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -24,7 +25,7 @@ func HandleApiGet(w http.ResponseWriter, r *http.Request) {
 	gresult, found := c.Get(result)
 	if !found {
 		fmt.Fprintln(w, "Not found!")
-		fmt.Println("INVALUD GET for " + result)
+		fmt.Println("INVALID GET for " + result)
 	} else {
 		fmt.Fprintf(w, "%s", gresult)
 		fmt.Println("GET for " + result)
