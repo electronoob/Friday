@@ -1,9 +1,9 @@
 package main
 
 import (
+	"friday/api"
 	"log"
 	"net/http"
-	"friday/api"
 )
 
 func main() {
