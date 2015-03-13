@@ -1,15 +1,15 @@
 package api
 
-import (
-	"github.com/pmylund/go-cache"
-	"time"
-)
-
-type Message struct {
-	Key   string
-	Value string
-	Time  int64
+type Owner struct{ username string }
+type App struct{ application string }
+type Object struct {
+	key   string
+	value string
+	time  int64
+	page  string
 }
-
-var c = cache.New(5*time.Hour, 1*time.Hour)
-var i int = 0
+type Memory struct {
+	Owner
+	App
+	Object
+}
