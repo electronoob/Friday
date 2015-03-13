@@ -31,8 +31,10 @@ func HandleApiGet(w http.ResponseWriter, r *http.Request) {
 	searchres := search(username, application, key, ram)
 	emptyMem := Memory{}
 	if searchres != emptyMem {
+		fmt.Println("GET for " + searchres.username + ":" + searchres.application + "; {" + searchres.page + ":'" + searchres.key + "'->'" + searchres.value + "'}")
 		fmt.Fprintf(w, "GET for " + searchres.username + ":" + searchres.application + "; {" + searchres.page + ":'" + searchres.key + "'->'" + searchres.value + "'}")
 	} else {
+		fmt.Println("INVALID GET FOR " + username + ":" + application + "{" + key + "}")
 		fmt.Fprintf(w, "Not found!")
 	}
 }
@@ -55,4 +57,5 @@ func HandleApiSet(w http.ResponseWriter, r *http.Request) {
 
 	ram = append(ram, item)
 	fmt.Fprintf(w, "SET for " + username + ":" + application + "; {" + page + ":'" + key + "'->'" + value + "'}")
+	fmt.Println("SET for " + username + ":" + application + "; {" + page + ":'" + key + "'->'" + value + "'}")
 }
