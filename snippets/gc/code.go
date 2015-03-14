@@ -14,13 +14,13 @@ func main() {
 	ram[0] = 0
 	/* let's disp at end too */
 	runtime.ReadMemStats(&memstats)
-	fmt.Printf("HeapSys:\t%d\nHeapAlloc:\t%d\n", memstats.HeapSys, memstats.HeapAlloc)
+	fmt.Println("HeapSys:\t%d\nHeapAlloc:\t%d\n", memstats.HeapSys, memstats.HeapAlloc)
 
 	ram = nil
 	runtime.GC() // call the garbage collection now
 
 	/* we have marked ram as being eligible for garbage collection with ram=nil; */
 	runtime.ReadMemStats(&memstats)
-	fmt.Printf("HeapSys:\t%d\nHeapAlloc:\t%d\n", memstats.HeapSys, memstats.HeapAlloc)
+	fmt.Println("HeapSys:\t%d\nHeapAlloc:\t%d\n", memstats.HeapSys, memstats.HeapAlloc)
 
 }

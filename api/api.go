@@ -3,18 +3,20 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 )
 
 var ram []Memory = make([]Memory, 0)
 
-func search(username string, application string, key string, ram []Memory) Memory {
+func search(username string, application string, key string, ram []Memory) []Memory {
+	var result []Memory
 	for _, item := range ram {
 		if item.Owner.username == username && item.App.application == application && item.Object.key == key {
-			return item
+			result = append(result, item)
 		}
 	}
-	return Memory{}
+	return result
 }
 
 func HandleApiSlash(w http.ResponseWriter, r *http.Request) {
@@ -27,15 +29,16 @@ func HandleApiGet(w http.ResponseWriter, r *http.Request) {
 	username := r.PostFormValue("User")
 	application := r.PostFormValue("App")
 	key := r.PostFormValue("Key")
-
 	searchres := search(username, application, key, ram)
-	emptyMem := Memory{}
-	if searchres != emptyMem {
-		fmt.Println("GET for " + searchres.username + ":" + searchres.application + "; {" + searchres.page + ":'" + searchres.key + "'->'" + searchres.value + "'}")
-		fmt.Fprintf(w, "GET for " + searchres.username + ":" + searchres.application + "; {" + searchres.page + ":'" + searchres.key + "'->'" + searchres.value + "'}")
-	} else {
+
+	if searchres == nil {
 		fmt.Println("INVALID GET FOR " + username + ":" + application + "{" + key + "}")
-		fmt.Fprintf(w, "Not found!")
+		fmt.Fprintln(w, "Not found!")
+	}
+
+	for _, item := range searchres {
+		fmt.Println("GET for " + item.username + ":" + item.application + "; {" + item.page + ":'" + item.key + "'->'" + item.value + "'} at " + strconv.FormatInt(time.Now().UnixNano(), 10))
+		fmt.Fprintln(w, "GET for "+item.username+":"+item.application+"; {"+item.page+":'"+item.key+"'->'"+item.value+"'}<br>")
 	}
 }
 func HandleApiSet(w http.ResponseWriter, r *http.Request) {
@@ -48,6 +51,7 @@ func HandleApiSet(w http.ResponseWriter, r *http.Request) {
 	value := r.PostFormValue("Value")
 
 	item := Memory{}
+
 	item.Owner.username = username
 	item.App.application = application
 	item.Object.page = page
@@ -56,6 +60,7 @@ func HandleApiSet(w http.ResponseWriter, r *http.Request) {
 	item.Object.time = time.Now().UnixNano()
 
 	ram = append(ram, item)
-	fmt.Fprintf(w, "SET for " + username + ":" + application + "; {" + page + ":'" + key + "'->'" + value + "'}")
-	fmt.Println("SET for " + username + ":" + application + "; {" + page + ":'" + key + "'->'" + value + "'}")
+
+	fmt.Fprintln(w, "SET for "+username+":"+application+"; {"+page+":'"+key+"'->'"+value+"'} at "+strconv.FormatInt(item.Object.time, 10))
+	fmt.Println("SET for " + username + ":" + application + "; {" + page + ":'" + key + "'->'" + value + "'} at " + strconv.FormatInt(item.Object.time, 10))
 }
