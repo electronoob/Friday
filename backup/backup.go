@@ -30,7 +30,7 @@ func writeDump(m []api.Memory) {
 func ReadDump() []api.Memory {
 	f, err := ioutil.ReadFile("friday.dump")
 	if err != nil {
-		panic(err)
+		panic("File not found!")
 	}
 	dec := gob.NewDecoder(bytes.NewReader(f))
 	var ret []api.Memory
@@ -42,8 +42,7 @@ func ReadDump() []api.Memory {
 }
 
 func SDump(t int) {
-	i := 0
-	for i == 0 {
+	for {
 		time.Sleep(time.Minute * time.Duration(t))
 		writeDump(api.Ram)
 		fmt.Println("BACKUP")
