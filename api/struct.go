@@ -1,12 +1,12 @@
 package api
 
-type Owner struct{ username string }
-type App struct{ application string }
+type Owner struct{ Username string }
+type App struct{ Application string }
 type Object struct {
-	key   string
-	value string
-	time  int64
-	page  string
+	Key   string
+	Value string
+	Time  int64
+	Page  string
 }
 type Memory struct {
 	Owner
