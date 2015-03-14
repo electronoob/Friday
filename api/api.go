@@ -34,7 +34,7 @@ func HandleApiGet(w http.ResponseWriter, r *http.Request) {
 
 	if searchres == nil {
 		fmt.Println("INVALID GET FOR " + username + ":" + application + "{" + key + "}")
-		fmt.Fprintln(w, "Not found!")
+		fmt.Fprintf(w, "")
 	} else {
 
 		j, err := json.Marshal(searchres)
