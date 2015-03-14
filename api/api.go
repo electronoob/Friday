@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -12,7 +13,7 @@ var ram []Memory = make([]Memory, 0)
 func search(username string, application string, key string, ram []Memory) []Memory {
 	var result []Memory
 	for _, item := range ram {
-		if item.Owner.username == username && item.App.application == application && item.Object.key == key {
+		if item.Owner.Username == username && item.App.Application == application && item.Object.Key == key {
 			result = append(result, item)
 		}
 	}
@@ -34,11 +35,21 @@ func HandleApiGet(w http.ResponseWriter, r *http.Request) {
 	if searchres == nil {
 		fmt.Println("INVALID GET FOR " + username + ":" + application + "{" + key + "}")
 		fmt.Fprintln(w, "Not found!")
-	}
+	} else {
 
-	for _, item := range searchres {
-		fmt.Println("GET for " + item.username + ":" + item.application + "; {" + item.page + ":'" + item.key + "'->'" + item.value + "'} at " + strconv.FormatInt(time.Now().UnixNano(), 10))
-		fmt.Fprintln(w, "GET for "+item.username+":"+item.application+"; {"+item.page+":'"+item.key+"'->'"+item.value+"'}<br>")
+		j, err := json.Marshal(searchres)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(j)
+
+		for _, item := range searchres {
+			fmt.Println("GET for " + item.Username + ":" + item.Application + "; {" + item.Page + ":'" + item.Key + "'->'" + item.Value + "'} at " + strconv.FormatInt(time.Now().UnixNano(), 10))
+		}
 	}
 }
 func HandleApiSet(w http.ResponseWriter, r *http.Request) {
@@ -52,15 +63,15 @@ func HandleApiSet(w http.ResponseWriter, r *http.Request) {
 
 	item := Memory{}
 
-	item.Owner.username = username
-	item.App.application = application
-	item.Object.page = page
-	item.Object.key = key
-	item.Object.value = value
-	item.Object.time = time.Now().UnixNano()
+	item.Owner.Username = username
+	item.App.Application = application
+	item.Object.Page = page
+	item.Object.Key = key
+	item.Object.Value = value
+	item.Object.Time = time.Now().UnixNano()
 
 	ram = append(ram, item)
 
-	fmt.Fprintln(w, "SET for "+username+":"+application+"; {"+page+":'"+key+"'->'"+value+"'} at "+strconv.FormatInt(item.Object.time, 10))
-	fmt.Println("SET for " + username + ":" + application + "; {" + page + ":'" + key + "'->'" + value + "'} at " + strconv.FormatInt(item.Object.time, 10))
+	fmt.Fprintln(w, "SET for "+username+":"+application+"; {"+page+":'"+key+"'->'"+value+"'} at "+strconv.FormatInt(item.Object.Time, 10))
+	fmt.Println("SET for " + username + ":" + application + "; {" + page + ":'" + key + "'->'" + value + "'} at " + strconv.FormatInt(item.Object.Time, 10))
 }
