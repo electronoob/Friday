@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-var ram []Memory = make([]Memory, 0)
+var Ram []Memory = make([]Memory, 0)
 
 func search(username string, application string, key string, ram []Memory) []Memory {
 	var result []Memory
@@ -30,7 +30,7 @@ func HandleApiGet(w http.ResponseWriter, r *http.Request) {
 	username := r.PostFormValue("User")
 	application := r.PostFormValue("App")
 	key := r.PostFormValue("Key")
-	searchres := search(username, application, key, ram)
+	searchres := search(username, application, key, Ram)
 
 	if searchres == nil {
 		fmt.Println("INVALID GET FOR " + username + ":" + application + "{" + key + "}")
@@ -70,7 +70,7 @@ func HandleApiSet(w http.ResponseWriter, r *http.Request) {
 	item.Object.Value = value
 	item.Object.Time = time.Now().UnixNano()
 
-	ram = append(ram, item)
+	Ram = append(Ram, item)
 
 	fmt.Fprintln(w, "SET for "+username+":"+application+"; {"+page+":'"+key+"'->'"+value+"'} at "+strconv.FormatInt(item.Object.Time, 10))
 	fmt.Println("SET for " + username + ":" + application + "; {" + page + ":'" + key + "'->'" + value + "'} at " + strconv.FormatInt(item.Object.Time, 10))
