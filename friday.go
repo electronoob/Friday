@@ -10,15 +10,15 @@ import (
 
 func main() {
 	addr := flag.String("l", "0.0.0.0:7008", "Listening address")
-	r := flag.Bool("r", false, "Restore from backup")
-	t := flag.Int("b", 0, "Backup frequency (in minutes, or 0 to disable)")
+	r := flag.Bool("r", false, "Bool: Restore from backup")
+	file := flag.String("f", "friday.dump", "File to restore backup from and save to")
+	t := flag.Int("b", 1, "Backup frequency (in minutes, or 0 to disable)")
 	flag.Parse()
-
 	if *r {
-		api.Ram = backup.ReadDump()
+		api.Ram = backup.ReadDump(*file)
 	}
 	if *t != 0 {
-		go backup.SDump(*t)
+		go backup.SDump(*t, *file)
 	}
 	http.Handle("/", http.FileServer(http.Dir("/var/www/gofridayadmin/")))
 	http.HandleFunc("/api/", api.HandleApiSlash)
