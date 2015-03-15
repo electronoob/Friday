@@ -8,9 +8,9 @@ import (
 
 func main() {
 
-/* using 32 byte (or 256 bits) crypto key and initialization vector*/
+/* using 32 byte (or 256 bits) crypto key and cipher text */
 crypto_cipher_key := []byte("12345678901234567890123456789012")
-crypto_cipher_text := []byte("12345678901234567890123456789012")
+crypto_cipher_text := []byte("01234567890123456789012345678901")
 
 /* the top secret data to transmit */
 plain_msg := "The original plaintext message is here, although the compression doesn't seem to make much difference to output size - in fact somewhat expands the required space!"
