@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"friday/api"
 	"io/ioutil"
+	"strconv"
 	"time"
 )
 
@@ -19,32 +20,33 @@ func getBytes(key interface{}) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-func writeDump(m []api.Memory) {
+func writeDump(m []api.Memory, filename string) {
 	b, _ := getBytes(m)
-	err := ioutil.WriteFile("friday.dump", b, 0664)
+	err := ioutil.WriteFile(filename, b, 0664)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func ReadDump() []api.Memory {
-	f, err := ioutil.ReadFile("friday.dump")
+func ReadDump(filename string) []api.Memory {
+	f, err := ioutil.ReadFile(filename)
 	if err != nil {
-		panic("File not found!")
+		fmt.Println("File", filename, "not found!")
+		return []api.Memory{}
 	}
 	dec := gob.NewDecoder(bytes.NewReader(f))
 	var ret []api.Memory
 	err = dec.Decode(&ret)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 	return ret
 }
 
-func SDump(t int) {
+func SDump(t int, filename string) {
 	for {
 		time.Sleep(time.Minute * time.Duration(t))
-		writeDump(api.Ram)
-		fmt.Println("BACKUP")
+		writeDump(api.Ram, filename)
+		fmt.Println("BACKUP at " + strconv.FormatInt(time.Now().UnixNano(), 10))
 	}
 }
