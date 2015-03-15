@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	dir := flag.String("d", "/var/www/gofridayadmin/", "Directory to serve from")
 	addr := flag.String("l", "0.0.0.0:7008", "Listening address")
 	r := flag.Bool("r", false, "Bool: Restore from backup")
 	file := flag.String("f", "friday.dump", "File to restore backup from and save to")
@@ -20,7 +21,7 @@ func main() {
 	if *t != 0 {
 		go backup.SDump(*t, *file)
 	}
-	http.Handle("/", http.FileServer(http.Dir("/var/www/gofridayadmin/")))
+	http.Handle("/", http.FileServer(http.Dir(*dir)))
 	http.HandleFunc("/api/", api.HandleApiSlash)
 	http.HandleFunc("/api/get/", api.HandleApiGet)
 	http.HandleFunc("/api/set/", api.HandleApiSet)
